@@ -19,6 +19,14 @@ class Image(object):
     def height(self):
         return self.raw.size[1]
     
+    @property
+    def maxside(self):
+        return max(self.width, self.height)
+    
+    @property
+    def area(self):
+        return self.width * self.height
+    
     @cached_property
     def raw(self):
         return self._load_raw()

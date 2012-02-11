@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 from dynamic_sprites.utils import cached_property
 
 class BinNode(object):
@@ -114,12 +116,21 @@ class BinTree(object):
     @property
     def height(self):
         return self.root.height
+        
+    def get_node_for_image(self, image):
+        return self.image_nodes[image]
 
 
 class BinPacking(object):
     
     def __init__(self, images):
-        self.images = images
+        self.images = self.sort_images(images)
+    
+    def sort_images(self, images):
+        return sorted(images, key=attrgetter('maxside', 'area'), reverse=True)
+    
+    def get_image_position(self, image):
+        return self.tree.get_node_for_image(image)
     
     @property
     def width(self):
