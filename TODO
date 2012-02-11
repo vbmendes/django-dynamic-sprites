@@ -1,0 +1,6 @@
+- criacao de sprites baseada em uma lista de imagens nomeadas
+- criacao horizontal, vertical e pin
+- obtenção de imagens a partir de paths dos arquivos
+- obtenção de paths dos arquivos através de models
+- criação de sprites a partir de querysets
+- callback para criar sprites no save de um model
