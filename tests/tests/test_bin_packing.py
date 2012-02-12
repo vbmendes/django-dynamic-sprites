@@ -3,7 +3,7 @@ import unittest
 from dynamic_sprites.image import Image
 from dynamic_sprites.packing import BinPacking
 
-from helpers import MockedImage
+from helpers import MockedImage, get_absolute_path
 
 class BinPackingBaseTestCase(object):
     
@@ -172,9 +172,9 @@ class BinPackingWithThreeImages(unittest.TestCase, BinPackingBaseTestCase):
 class BinPackingWithThreeRealImages(unittest.TestCase, BinPackingBaseTestCase):
     
     def setUp(self):
-        self.image1 = Image('country/flags/bra.png')
-        self.image2 = Image('country/flags/can.png')
-        self.image3 = Image('country/flags/usa.png')
+        self.image1 = Image(get_absolute_path('country/flags/bra.png'))
+        self.image2 = Image(get_absolute_path('country/flags/can.png'))
+        self.image3 = Image(get_absolute_path('country/flags/usa.png'))
         self.bin_packing = BinPacking(images=[self.image1, self.image2, self.image3])
 
     def test_dimensions(self):

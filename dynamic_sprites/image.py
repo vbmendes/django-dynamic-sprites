@@ -1,8 +1,6 @@
 import os
 from PIL import Image as PImage
 
-from django.conf import settings
-
 from dynamic_sprites.utils import cached_property
 
 
@@ -32,22 +30,18 @@ class Image(object):
         return self._load_raw()
     
     def _load_raw(self):
-        with open(self.absolute_path, 'rb') as image_file:
+        with open(self.path, 'rb') as image_file:
             raw = PImage.open(image_file)
             raw.load()
         return raw
     
     @property
     def filename(self):
-        return self.absolute_path.rsplit('.', 1)[0]
+        return self.path.rsplit('.', 1)[0]
     
     @property
     def format(self):
-        return self.absolute_path.rsplit('.', 1)[1]
-    
-    @property
-    def absolute_path(self):
-        return os.path.join(settings.MEDIA_ROOT, self.path)
+        return self.path.rsplit('.', 1)[1]
 
 
 class OutputImage(object):
@@ -61,8 +55,7 @@ class OutputImage(object):
         self.canvas.paste(image.raw, (x, y))
     
     def save(self, path):
-        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
-        self.canvas.save(absolute_path, optimize=True)
+        self.canvas.save(   path, optimize=True)
     
     
         

@@ -7,13 +7,16 @@ from dynamic_sprites.image import Image
 from dynamic_sprites.packing import BinPacking, HorizontalPacking, VerticalPacking
 from dynamic_sprites.sprite import Sprite
 
+from helpers import get_absolute_path
+
+
 class HorizontalSpriteTestCase(TestCase):
 
     def setUp(self):
         self.sprite = Sprite('flags',
             images=[
-                ('brazil', 'country/flags/brazil.gif'),
-                ('usa', 'country/flags/usa.jpg'),
+                ('brazil', get_absolute_path('country/flags/brazil.gif')),
+                ('usa', get_absolute_path('country/flags/usa.jpg')),
             ],
             packing_class=HorizontalPacking
         )
@@ -37,9 +40,9 @@ class HorizontalSpriteTestCase(TestCase):
         absolute_path = os.path.join(settings.MEDIA_ROOT, path)
         
         try:
-            generated.save(path)
+            generated.save(absolute_path)
             self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(path)
+            generated_from_fs = Image(absolute_path)
             self.assertEqual(generated.width, generated_from_fs.width)
             self.assertEqual(generated.height, generated_from_fs.height)
         finally:
@@ -51,9 +54,9 @@ class VerticalSpriteTestCase(TestCase):
     def setUp(self):
         self.sprite = Sprite('flags',
             images=[
-                ('brazil', 'country/flags/bra.png'),
-                ('usa', 'country/flags/usa.png'),
-                ('canada', 'country/flags/can.png'),
+                ('brazil', get_absolute_path('country/flags/bra.png')),
+                ('usa', get_absolute_path('country/flags/usa.png')),
+                ('canada', get_absolute_path('country/flags/can.png')),
             ],
             packing_class=VerticalPacking
         )
@@ -77,9 +80,9 @@ class VerticalSpriteTestCase(TestCase):
         absolute_path = os.path.join(settings.MEDIA_ROOT, path)
         
         try:
-            generated.save(path)
+            generated.save(absolute_path)
             self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(path)
+            generated_from_fs = Image(absolute_path)
             self.assertEqual(generated.width, generated_from_fs.width)
             self.assertEqual(generated.height, generated_from_fs.height)
         finally:
@@ -91,9 +94,9 @@ class BinSpriteTestCase(TestCase):
     def setUp(self):
         self.sprite = Sprite('flags',
             images=[
-                ('brazil', 'country/flags/bra.png'),
-                ('usa', 'country/flags/usa.png'),
-                ('canada', 'country/flags/can.png'),
+                ('brazil', get_absolute_path('country/flags/bra.png')),
+                ('usa', get_absolute_path('country/flags/usa.png')),
+                ('canada', get_absolute_path('country/flags/can.png')),
             ],
             packing_class=BinPacking
         )
@@ -117,9 +120,9 @@ class BinSpriteTestCase(TestCase):
         absolute_path = os.path.join(settings.MEDIA_ROOT, path)
         
         try:
-            generated.save(path)
+            generated.save(absolute_path)
             self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(path)
+            generated_from_fs = Image(absolute_path)
             self.assertEqual(generated.width, generated_from_fs.width)
             self.assertEqual(generated.height, generated_from_fs.height)
         finally:
