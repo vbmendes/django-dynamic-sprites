@@ -1,6 +1,11 @@
-- criacao de sprites baseada em uma lista de imagens nomeadas
-- criacao horizontal, vertical e pin
-- obtenção de imagens a partir de paths dos arquivos
+OK- disposicao horizontal
+OK- disposicao vertical
+OK- disposicao pin OK
+OK- obtenção de imagens a partir de paths dos arquivos
+OK- criacao de sprites baseada em uma lista de imagens nomeadas
 - obtenção de paths dos arquivos através de models
 - criação de sprites a partir de querysets
 - callback para criar sprites no save de um model
+- otimizacao da saida com configuracao do tipo de saida
+- cliente de linha de comando para gerar sprites de um diretorio
+
