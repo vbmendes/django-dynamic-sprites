@@ -3,8 +3,7 @@ import unittest
 from dynamic_sprites.image import Image
 from dynamic_sprites.packing import BinPacking
 
-class MockedImage(object):
-    pass
+from helpers import MockedImage
 
 class BinPackingBaseTestCase(object):
     

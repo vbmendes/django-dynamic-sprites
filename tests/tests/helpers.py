@@ -1,0 +1,2 @@
+class MockedImage(object):
+    pass
