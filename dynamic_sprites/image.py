@@ -48,3 +48,21 @@ class Image(object):
     @property
     def absolute_path(self):
         return os.path.join(settings.MEDIA_ROOT, self.path)
+
+
+class OutputImage(object):
+    
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.canvas = PImage.new('RGBA', (width, height), (0, 0, 0, 0))
+    
+    def add(self, image, x, y):
+        self.canvas.paste(image.raw, (x, y))
+    
+    def save(self, path):
+        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
+        self.canvas.save(absolute_path, optimize=True)
+    
+    
+        

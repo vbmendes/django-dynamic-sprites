@@ -1,6 +1,11 @@
+import os
+
+from PIL import Image as PImage
+
+from django.conf import settings
 from django.test import TestCase
 
-from dynamic_sprites.image import Image
+from dynamic_sprites.image import Image, OutputImage
 
 class ImageTestCase(TestCase):
     
@@ -18,3 +23,25 @@ class ImageTestCase(TestCase):
         self.assertEqual(475, image.maxside)
         self.assertEqual(475 * 335, image.area)
 
+
+class OutputImageTestCase(TestCase):
+    
+    def test_image_can_be_saved(self):
+        image1 = Image('country/flags/bra.png')
+        image2 = Image('country/flags/can.png')
+        image3 = Image('country/flags/usa.png')
+        out_image = OutputImage(48*3, 48)
+        out_image.add(image1, 0, 0)
+        out_image.add(image2, 48, 0)
+        out_image.add(image3, 96, 0)
+        
+        path = 'country/flags/sprite.png'
+        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
+        try:
+            out_image.save(path)
+            self.assertTrue(os.path.exists(absolute_path))
+            generated_from_fs = Image(path)
+            self.assertEqual(out_image.width, generated_from_fs.width)
+            self.assertEqual(out_image.height, generated_from_fs.height)
+        finally:
+            os.remove(absolute_path)
