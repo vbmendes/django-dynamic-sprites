@@ -2,13 +2,20 @@ from operator import attrgetter
 
 from dynamic_sprites.utils import cached_property
 
-class BinNode(object):
+
+class BaseNode(object):
     
-    def __init__(self, x=0, y=0, width=0, height=0, used=False, down=None, right=None):
+    def __init__(self, x=0, y=0, width=0, height=0):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
+
+
+class BinNode(BaseNode):
+    
+    def __init__(self, x=0, y=0, width=0, height=0, used=False, down=None, right=None):
+        super(BinNode, self).__init__(x, y, width, height)
         self.used = used
         self.right = right
         self.down = down
@@ -33,7 +40,7 @@ class BinNode(object):
 class BinTree(object):
     
     def __init__(self, images):
-        self.image_nodes = {}
+        self.images_nodes = {}
         self.root = BinNode(width=images[0].width, height=images[0].height)
         for image in images:
             node = self.find(self.root, image.width, image.height)
@@ -41,7 +48,7 @@ class BinTree(object):
                 node = node.split(image.width, image.height)
             else:
                 node = self.grow(image.width, image.height)
-            self.image_nodes[image] = node
+            self.images_nodes[image] = node
     
     def find(self, node, width, height):
         if node.used:
@@ -118,16 +125,30 @@ class BinTree(object):
         return self.root.height
         
     def get_node_for_image(self, image):
-        return self.image_nodes[image]
+        return self.images_nodes[image]
 
 
-class BinPacking(object):
+class BasePacking(object):
     
     def __init__(self, images):
         self.images = self.sort_images(images)
-    
+
     def sort_images(self, images):
         return sorted(images, key=attrgetter('maxside', 'area'), reverse=True)
+
+    def get_image_position(self, image):
+        raise NotImplementedError
+
+    @property
+    def width(self):
+        raise NotImplementedError
+    
+    @property
+    def height(self):
+        raise NotImplementedError
+
+
+class BinPacking(BasePacking):        
     
     def get_image_position(self, image):
         return self.tree.get_node_for_image(image)
@@ -147,3 +168,68 @@ class BinPacking(object):
     def _build_tree(self):
         tree = BinTree(self.images)
         return tree
+
+
+class AbstractLinearPacking(BasePacking):
+    
+    HORIZONTAL, VERTICAL = 'h', 'v'
+    
+    orientation = HORIZONTAL
+    
+    def get_image_position(self, image):
+        return self.images_nodes[image]
+    
+    @cached_property
+    def images_nodes(self):
+        return self._calculate_images_nodes()
+    
+    def _calculate_images_nodes(self):
+        images_nodes = {}
+        if self.orientation == self.HORIZONTAL:
+            delta_position_method = lambda x, y, image: (x + image.width, y)
+        elif self.orientation == self.VERTICAL:
+            delta_position_method = lambda x, y, image: (x , y + image.height)
+        else:
+            self._raise_orientation_error()
+        
+        x = 0
+        y = 0
+        for image in self.images:
+            images_nodes[image] = BaseNode(x, y)
+            x, y = delta_position_method(x, y, image)
+        
+        return images_nodes
+    
+    def _raise_orientation_error(self):
+        raise ValueError("Invalid orientation for LinearPacking: %s. Only %s and %s permitted." % 
+                         (self.orientation, self.HORIZONTAL, self.VERTICAL))
+    
+    @property
+    def width(self):
+        widths_generator = (img.width for img in self.images)
+        if self.orientation == self.HORIZONTAL:
+            width = sum(widths_generator)
+        elif self.orientation == self.VERTICAL:
+            width = max(widths_generator)
+        else:
+            self._raise_orientation_error()
+        return width
+    
+    @property
+    def height(self):
+        heights_generator = (img.height for img in self.images)
+        if self.orientation == self.VERTICAL:
+            height = sum(heights_generator)
+        else:
+            height = max(heights_generator)
+        return height
+
+
+class HorizontalPacking(AbstractLinearPacking):
+    
+    orientation = AbstractLinearPacking.HORIZONTAL
+
+
+class VerticalPacking(AbstractLinearPacking):
+
+    orientation = AbstractLinearPacking.VERTICAL
