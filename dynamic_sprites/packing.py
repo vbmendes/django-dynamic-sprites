@@ -233,3 +233,9 @@ class HorizontalPacking(AbstractLinearPacking):
 class VerticalPacking(AbstractLinearPacking):
 
     orientation = AbstractLinearPacking.VERTICAL
+
+PACKING_DICT = {
+    'horizontal': HorizontalPacking,
+    'vertical': VerticalPacking,
+    'bin': BinPacking,
+}
