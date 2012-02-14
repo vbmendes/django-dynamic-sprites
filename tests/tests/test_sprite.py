@@ -47,6 +47,13 @@ class HorizontalSpriteTestCase(TestCase):
             self.assertEqual(generated.height, generated_from_fs.height)
         finally:
             os.remove(absolute_path)
+    
+    def test_sprite_css(self):
+        css = self.sprite.generate_css('image_url.png')
+        self.assertTrue(isinstance(css, basestring))
+        self.assertTrue('.sprite-flags' in css)
+        self.assertTrue('.sprite-flags-brazil{background-position:-0px -0px}' in css)
+
 
 
 class VerticalSpriteTestCase(TestCase):
@@ -87,6 +94,14 @@ class VerticalSpriteTestCase(TestCase):
             self.assertEqual(generated.height, generated_from_fs.height)
         finally:
             os.remove(absolute_path)
+    
+    def test_sprite_css(self):
+        css = self.sprite.generate_css('image_url.png')
+        self.assertTrue(isinstance(css, basestring))
+        self.assertTrue('.sprite-flags' in css)
+        self.assertTrue('.sprite-flags-brazil{background-position:-0px -0px}' in css)
+        self.assertTrue('.sprite-flags-usa{background-position:-0px -48px}' in css)
+        self.assertTrue('.sprite-flags-canada{background-position:-0px -96px}' in css)
 
 
 class BinSpriteTestCase(TestCase):
@@ -127,3 +142,11 @@ class BinSpriteTestCase(TestCase):
             self.assertEqual(generated.height, generated_from_fs.height)
         finally:
             os.remove(absolute_path)
+    
+    def test_sprite_css(self):
+        css = self.sprite.generate_css('image_url.png')
+        self.assertTrue(isinstance(css, basestring))
+        self.assertTrue('.sprite-flags' in css)
+        self.assertTrue('.sprite-flags-brazil{background-position:-0px -0px}' in css)
+        self.assertTrue('.sprite-flags-usa{background-position:-48px -0px}' in css)
+        self.assertTrue('.sprite-flags-canada{background-position:-0px -48px}' in css)

@@ -36,3 +36,18 @@ class Sprite(object):
             pos = self.packing.get_image_position(image)
             output.add(image, pos.x, pos.y)
         return output
+    
+    def generate_css(self, image_url):
+        output = ".sprite-%(sprite_name)s{background:url(%(image_url)s)}" % {
+            'sprite_name': self.name,
+            'image_url': image_url,
+        }
+        for name, image in self.images:            
+            pos = self.packing.get_image_position(image)
+            output += " .sprite-%(sprite_name)s-%(name)s{background-position:-%(x)spx -%(y)spx}" % {
+                'sprite_name': self.name,
+                'name': name,
+                'x': pos.x,
+                'y': pos.y,
+            }
+        return output
