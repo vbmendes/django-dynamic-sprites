@@ -23,9 +23,6 @@ if not settings.configured:
 
             'tests',
         ],
-        MIDDLEWARE_CLASSES=global_settings.MIDDLEWARE_CLASSES + (
-            'debug_toolbar.middleware.DebugToolbarMiddleware',
-        ),
         ROOT_URLCONF='',
         DEBUG=False,
         SITE_ID=1,
