@@ -20,7 +20,7 @@ class BinNode(BaseNode):
         self.right = right
         self.down = down
         
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         return '<dynamic_sprites.packing.BinNode x: %s y: %s w: %s h:%s>' % (self.x, self.y, self.width, self.height)
     
     def split(self, width, height):
@@ -136,15 +136,15 @@ class BasePacking(object):
     def sort_images(self, images):
         return sorted(images, key=attrgetter('maxside', 'area'), reverse=True)
 
-    def get_image_position(self, image):
+    def get_image_position(self, image): #pragma: no cover
         raise NotImplementedError
 
     @property
-    def width(self):
+    def width(self): #pragma: no cover
         raise NotImplementedError
     
     @property
-    def height(self):
+    def height(self): #pragma: no cover
         raise NotImplementedError
 
 
@@ -174,7 +174,7 @@ class AbstractLinearPacking(BasePacking):
     
     HORIZONTAL, VERTICAL = 'h', 'v'
     
-    orientation = HORIZONTAL
+    orientation = None
     
     def get_image_position(self, image):
         return self.images_nodes[image]
@@ -220,8 +220,10 @@ class AbstractLinearPacking(BasePacking):
         heights_generator = (img.height for img in self.images)
         if self.orientation == self.VERTICAL:
             height = sum(heights_generator)
-        else:
+        elif self.orientation == self.HORIZONTAL:
             height = max(heights_generator)
+        else:
+            self._raise_orientation_error()
         return height
 
 

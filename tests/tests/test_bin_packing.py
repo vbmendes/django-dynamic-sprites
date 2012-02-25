@@ -170,7 +170,7 @@ class BinPackingWithThreeImages(unittest.TestCase, BinPackingBaseTestCase):
 
 
 class BinPackingWithThreeRealImages(unittest.TestCase, BinPackingBaseTestCase):
-    
+
     def setUp(self):
         self.image1 = Image(get_absolute_path('country/flags/bra.png'))
         self.image2 = Image(get_absolute_path('country/flags/can.png'))
@@ -192,4 +192,28 @@ class BinPackingWithThreeRealImages(unittest.TestCase, BinPackingBaseTestCase):
     def test_image3_position(self):
         self.assertEquals(0, self.bin_packing.get_image_position(self.image3).x)
         self.assertEquals(48, self.bin_packing.get_image_position(self.image3).y)
-    
+
+
+class BinPackingWithThreeRealImages(unittest.TestCase, BinPackingBaseTestCase):
+
+    def setUp(self):
+        self.image1 = Image(get_absolute_path('country/flags/bra.png'))
+        self.image2 = Image(get_absolute_path('country/flags/can.png'))
+        self.image3 = Image(get_absolute_path('country/flags/usa.png'))
+        self.bin_packing = BinPacking(images=[self.image1, self.image2, self.image3])
+
+    def test_dimensions(self):
+        self.assertEquals(96, self.bin_packing.width)
+        self.assertEquals(96, self.bin_packing.height)
+
+    def test_image1_position(self):
+        self.assertEquals(0, self.bin_packing.get_image_position(self.image1).x)
+        self.assertEquals(0, self.bin_packing.get_image_position(self.image1).y)
+
+    def test_image2_position(self):
+        self.assertEquals(48, self.bin_packing.get_image_position(self.image2).x)
+        self.assertEquals(0, self.bin_packing.get_image_position(self.image2).y)
+
+    def test_image3_position(self):
+        self.assertEquals(0, self.bin_packing.get_image_position(self.image3).x)
+        self.assertEquals(48, self.bin_packing.get_image_position(self.image3).y)

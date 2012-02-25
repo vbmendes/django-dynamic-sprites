@@ -1,9 +1,23 @@
 import unittest
 
-from dynamic_sprites.image import Image
-from dynamic_sprites.packing import HorizontalPacking, VerticalPacking
+from dynamic_sprites.packing import AbstractLinearPacking, HorizontalPacking, VerticalPacking
 
 from helpers import MockedImage
+
+class LinearPackingTestCase(unittest.TestCase):
+
+    def test_pure_linear_packing_raises_error(self):
+        self.image = MockedImage()
+        self.image.width = 10
+        self.image.height = 20
+        self.image.maxside = 20
+        self.image.area = 200
+        self.packing = AbstractLinearPacking(images=[self.image])
+        self.assertRaises(ValueError, self.packing.get_image_position, self.image)
+        self.assertRaises(ValueError, getattr, self.packing , 'width')
+        self.assertRaises(ValueError, getattr, self.packing , 'height')
+
+
 
 class HorizontalPackingWithOneImageTestCase(unittest.TestCase):
 
