@@ -37,7 +37,7 @@ class Image(object):
     
     @property
     def filename(self):
-        return self.path.rsplit('.', 1)[0]
+        return self.path.rsplit('.', 1)[0].split('/')[-1]
     
     @property
     def format(self):

@@ -26,6 +26,11 @@ class ImageTestCase(TestCase):
         self.assertEqual(475, image.maxside)
         self.assertEqual(475 * 335, image.area)
 
+    def test_image_filename_and_format(self):
+        image = Image(get_absolute_path('country/flags/usa.jpg'))
+        self.assertEqual('usa', image.filename)
+        self.assertEqual('jpg', image.format)
+
 
 class OutputImageTestCase(TestCase):
     
