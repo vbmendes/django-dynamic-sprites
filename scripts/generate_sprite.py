@@ -28,14 +28,16 @@ def main():
     
     
     (options, args) = parser.parse_args()
-    packing = PACKING_DICT[options.packing]
+    packing = PACKING_DICT[options.packing.strip()]
     
     input_dir = args[0]
     output_path = args[1]
     output_png_path = output_path + '.png'
     output_css_path = output_path + '.css'
 
-    sprite = Sprite(name='test', images=get_images(input_dir), packing_class=packing)
+    name = output_path.split('/')[-1]
+
+    sprite = Sprite(name=name, images=get_images(input_dir), packing_class=packing)
 
     output_image = sprite.generate()
     output_css = sprite.generate_css(output_png_path)
