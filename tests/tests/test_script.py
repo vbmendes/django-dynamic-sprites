@@ -6,6 +6,7 @@ import subprocess
 import sys
 import unittest
 
+
 class ScriptTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -18,7 +19,7 @@ class ScriptTestCase(unittest.TestCase):
         self.output_path = os.path.join(self.TMP_DIR, 'output-sprite')
         self.output_png = '%s.png' % self.output_path
         self.output_css = '%s.css' % self.output_path
-        
+
         self.old_python_path = sys.path.append(self.ROOT_DIR)
 
     def tearDown(self):
@@ -39,7 +40,6 @@ class ScriptTestCase(unittest.TestCase):
             self.assertEquals(selector, rule.selectorText)
             self.assertEquals(position, rule.style.backgroundPosition)
             i += 1
-
 
     def test_command_generates_the_output_image(self):
         subprocess.call([self.script_path, self.input_path, self.output_path])

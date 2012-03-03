@@ -4,6 +4,7 @@ from dynamic_sprites.packing import AbstractLinearPacking, HorizontalPacking, Ve
 
 from helpers import MockedImage
 
+
 class LinearPackingTestCase(unittest.TestCase):
 
     def test_pure_linear_packing_raises_error(self):
@@ -14,9 +15,8 @@ class LinearPackingTestCase(unittest.TestCase):
         self.image.area = 200
         self.packing = AbstractLinearPacking(images=[self.image])
         self.assertRaises(ValueError, self.packing.get_image_position, self.image)
-        self.assertRaises(ValueError, getattr, self.packing , 'width')
-        self.assertRaises(ValueError, getattr, self.packing , 'height')
-
+        self.assertRaises(ValueError, getattr, self.packing, 'width')
+        self.assertRaises(ValueError, getattr, self.packing, 'height')
 
 
 class HorizontalPackingWithOneImageTestCase(unittest.TestCase):
@@ -32,10 +32,11 @@ class HorizontalPackingWithOneImageTestCase(unittest.TestCase):
     def test_dimensions(self):
         self.assertEquals(self.image.width, self.packing.width)
         self.assertEquals(self.image.height, self.packing.height)
-    
+
     def test_image_position(self):
         self.assertEquals(0, self.packing.get_image_position(self.image).x)
         self.assertEquals(0, self.packing.get_image_position(self.image).y)
+
 
 class HorizontalPackingWithTwoImagesTestCase(unittest.TestCase):
 

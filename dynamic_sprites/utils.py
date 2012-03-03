@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 
 from functools import wraps
+
 
 def cached_property(fn):
     @wraps(fn)
