@@ -1,0 +1,18 @@
+[{
+    "model": "tests.country",
+    "pk": 1,
+    "fields": {
+        "name": "Brazil",
+        "slug": "brazil",
+        "flag": "country/flags/brazil.gif"
+    }
+},
+{
+    "model": "tests.country",
+    "pk": 2,
+    "fields": {
+        "name": "USA",
+        "slug": "usa",
+        "flag": "country/flags/usa.jpg"
+    }
+}]

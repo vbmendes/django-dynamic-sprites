@@ -1,15 +1,14 @@
-import os
+# coding: utf8
 
-from django.conf import settings
 from django.test import TestCase
 
-from dynamic_sprites.image import Image
 from dynamic_sprites.packing import BinPacking, HorizontalPacking, VerticalPacking
 from dynamic_sprites.sprite import Sprite
 
-from helpers import get_absolute_path
+from helpers import get_absolute_path, SpriteTestCaseMixin
 
-class TestEmptySpriteTestCase(TestCase):
+
+class TestEmptySpriteTestCase(TestCase, SpriteTestCaseMixin):
 
     def setUp(self):
         self.sprite = Sprite('flags', images=[])
@@ -18,26 +17,8 @@ class TestEmptySpriteTestCase(TestCase):
         self.assertEqual(1, self.sprite.width)
         self.assertEqual(1, self.sprite.height)
 
-    def test_sprite_image(self):
-        generated = self.sprite.generate()
-        self.assertEqual(self.sprite.width, generated.width)
-        self.assertEqual(self.sprite.height, generated.height)
 
-        path = 'country/flags/sprite.png'
-        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
-
-        try:
-            generated.save(absolute_path)
-            self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(absolute_path)
-            self.assertEqual(generated.width, generated_from_fs.width)
-            self.assertEqual(generated.height, generated_from_fs.height)
-        finally:
-            os.remove(absolute_path)
-
-
-
-class HorizontalSpriteTestCase(TestCase):
+class HorizontalSpriteTestCase(TestCase, SpriteTestCaseMixin):
 
     def setUp(self):
         self.sprite = Sprite('flags',
@@ -58,23 +39,6 @@ class HorizontalSpriteTestCase(TestCase):
         self.assertEqual(475 + 476, self.sprite.width)
         self.assertEqual(max(335, 330), self.sprite.height)
 
-    def test_sprite_image(self):
-        generated = self.sprite.generate()
-        self.assertEqual(self.sprite.width, generated.width)
-        self.assertEqual(self.sprite.height, generated.height)
-
-        path = 'country/flags/sprite.png'
-        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
-
-        try:
-            generated.save(absolute_path)
-            self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(absolute_path)
-            self.assertEqual(generated.width, generated_from_fs.width)
-            self.assertEqual(generated.height, generated_from_fs.height)
-        finally:
-            os.remove(absolute_path)
-
     def test_sprite_css(self):
         css = self.sprite.generate_css('image_url.png')
         self.assertTrue(isinstance(css, basestring))
@@ -82,7 +46,7 @@ class HorizontalSpriteTestCase(TestCase):
         self.assertTrue('.sprite-flags-brazil{background-position:-0px -0px}' in css)
 
 
-class VerticalSpriteTestCase(TestCase):
+class VerticalSpriteTestCase(TestCase, SpriteTestCaseMixin):
 
     def setUp(self):
         self.sprite = Sprite('flags',
@@ -104,23 +68,6 @@ class VerticalSpriteTestCase(TestCase):
         self.assertEqual(48, self.sprite.width)
         self.assertEqual(3 * 48, self.sprite.height)
 
-    def test_sprite_image(self):
-        generated = self.sprite.generate()
-        self.assertEqual(self.sprite.width, generated.width)
-        self.assertEqual(self.sprite.height, generated.height)
-
-        path = 'country/flags/sprite.png'
-        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
-
-        try:
-            generated.save(absolute_path)
-            self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(absolute_path)
-            self.assertEqual(generated.width, generated_from_fs.width)
-            self.assertEqual(generated.height, generated_from_fs.height)
-        finally:
-            os.remove(absolute_path)
-
     def test_sprite_css(self):
         css = self.sprite.generate_css('image_url.png')
         self.assertTrue(isinstance(css, basestring))
@@ -130,7 +77,7 @@ class VerticalSpriteTestCase(TestCase):
         self.assertTrue('.sprite-flags-canada{background-position:-0px -96px}' in css)
 
 
-class BinSpriteTestCase(TestCase):
+class BinSpriteTestCase(TestCase, SpriteTestCaseMixin):
 
     def setUp(self):
         self.sprite = Sprite('flags',
@@ -151,23 +98,6 @@ class BinSpriteTestCase(TestCase):
     def test_dimensions(self):
         self.assertEqual(96, self.sprite.width)
         self.assertEqual(96, self.sprite.height)
-
-    def test_sprite_image(self):
-        generated = self.sprite.generate()
-        self.assertEqual(self.sprite.width, generated.width)
-        self.assertEqual(self.sprite.height, generated.height)
-
-        path = 'country/flags/sprite.png'
-        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
-
-        try:
-            generated.save(absolute_path)
-            self.assertTrue(os.path.exists(absolute_path))
-            generated_from_fs = Image(absolute_path)
-            self.assertEqual(generated.width, generated_from_fs.width)
-            self.assertEqual(generated.height, generated_from_fs.height)
-        finally:
-            os.remove(absolute_path)
 
     def test_sprite_css(self):
         css = self.sprite.generate_css('image_url.png')
