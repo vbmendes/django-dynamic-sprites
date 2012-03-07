@@ -40,8 +40,7 @@ def main():
     output_image = sprite.generate()
     output_css = sprite.generate_css(output_png_path)
     output_image.save(output_png_path)
-    with open(output_css_path, 'w') as f:
-        f.write(output_css + '\n')
+    output_css.save(output_css_path)
 
 if __name__ == '__main__':
     main()

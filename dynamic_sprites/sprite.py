@@ -2,6 +2,7 @@
 
 from dynamic_sprites.packing import HorizontalPacking, EmptyPacking
 from dynamic_sprites.image import Image, OutputImage
+from dynamic_sprites.output_css import OutputCss
 
 
 class Sprite(object):
@@ -36,16 +37,16 @@ class Sprite(object):
         return output
 
     def generate_css(self, image_url):
-        output = ".sprite-%(sprite_name)s{background:url(%(image_url)s)}" % {
+        output_parts = [".sprite-%(sprite_name)s{background:url(%(image_url)s)}" % {
             'sprite_name': self.name,
             'image_url': image_url,
-        }
+        }]
         for name, image in self.images:
             pos = self.packing.get_image_position(image)
-            output += " .sprite-%(sprite_name)s-%(name)s{background-position:-%(x)spx -%(y)spx}" % {
+            output_parts.append(".sprite-%(sprite_name)s-%(name)s{background-position:-%(x)spx -%(y)spx}" % {
                 'sprite_name': self.name,
                 'name': name,
                 'x': pos.x,
                 'y': pos.y,
-            }
-        return output
+            })
+        return OutputCss(' '.join(output_parts))
