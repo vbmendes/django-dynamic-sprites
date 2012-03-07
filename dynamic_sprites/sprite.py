@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from dynamic_sprites.packing import HorizontalPacking
+from dynamic_sprites.packing import HorizontalPacking, EmptyPacking
 from dynamic_sprites.image import Image, OutputImage
 
 
@@ -9,6 +9,8 @@ class Sprite(object):
     def __init__(self, name, images, packing_class=HorizontalPacking):
         self.name = name
         self.images = self._load_images(images)
+        if not images:
+            packing_class = EmptyPacking
         self.packing = packing_class([img for name, img in self.images])
 
     def _load_images(self, images):

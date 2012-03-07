@@ -9,6 +9,33 @@ from dynamic_sprites.sprite import Sprite
 
 from helpers import get_absolute_path
 
+class TestEmptySpriteTestCase(TestCase):
+
+    def setUp(self):
+        self.sprite = Sprite('flags', images=[])
+
+    def test_dimensions(self):
+        self.assertEqual(1, self.sprite.width)
+        self.assertEqual(1, self.sprite.height)
+
+    def test_sprite_image(self):
+        generated = self.sprite.generate()
+        self.assertEqual(self.sprite.width, generated.width)
+        self.assertEqual(self.sprite.height, generated.height)
+
+        path = 'country/flags/sprite.png'
+        absolute_path = os.path.join(settings.MEDIA_ROOT, path)
+
+        try:
+            generated.save(absolute_path)
+            self.assertTrue(os.path.exists(absolute_path))
+            generated_from_fs = Image(absolute_path)
+            self.assertEqual(generated.width, generated_from_fs.width)
+            self.assertEqual(generated.height, generated_from_fs.height)
+        finally:
+            os.remove(absolute_path)
+
+
 
 class HorizontalSpriteTestCase(TestCase):
 

@@ -125,8 +125,6 @@ class BinTree(object):
 
 class BasePacking(object):
 
-    # BIN: http://codeincomplete.com/posts/2011/5/7/bin_packing/
-
     def __init__(self, images):
         self.images = self.sort_images(images)
 
@@ -145,7 +143,23 @@ class BasePacking(object):
         raise NotImplementedError
 
 
+class EmptyPacking(BasePacking):
+    # Empty packing must be 1x1 because it's impossible
+    # to save images with 0 width or height
+
+    @property
+    def width(self):
+        return 1
+
+    @property
+    def height(self):
+        return 1
+
+
 class BinPacking(BasePacking):
+
+    # BIN: http://codeincomplete.com/posts/2011/5/7/bin_packing/
+
     def get_image_position(self, image):
         return self.tree.get_node_for_image(image)
 
