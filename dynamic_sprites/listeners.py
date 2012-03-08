@@ -9,7 +9,7 @@ from dynamic_sprites.model_sprite import ModelSprite
 
 class ModelSpriteListener(object):
 
-    def __init__(self, name, image_field, slug_field, queryset):
+    def __init__(self, name, image_field, slug_field, queryset=None):
         self.name = name
         self.image_field = image_field
         self.slug_field = slug_field
@@ -17,6 +17,10 @@ class ModelSpriteListener(object):
 
     def __call__(self, sender, instance, created, raw, using, **kwargs):
         queryset = self.get_queryset(instance)
+        if queryset.filter(pk=instance.pk).count() > 0:
+            self.generate_sprite(queryset)
+
+    def generate_sprite(self, queryset):
         sprite = ModelSprite(
             name=self.name,
             queryset=queryset,
@@ -29,7 +33,10 @@ class ModelSpriteListener(object):
         css.save(self.css_absolute_path)
 
     def get_queryset(self, instance):
-        return self.queryset  # or instance.__class__._default_manager.all()
+        queryset = self.queryset
+        if queryset is None:
+            queryset = instance.__class__._default_manager.all()
+        return queryset
 
     @property
     def image_absolute_path(self):
