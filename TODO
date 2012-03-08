@@ -4,8 +4,8 @@ OK- disposicao pin OK
 OK- obtenção de imagens a partir de paths dos arquivos
 OK- criacao de sprites baseada em uma lista de imagens nomeadas
 OK- cliente de linha de comando para gerar sprites de um diretorio
-- obtenção de paths dos arquivos através de models
-- criação de sprites a partir de querysets
+OK- obtenção de paths dos arquivos através de models
+OK- criação de sprites a partir de querysets
 - callback para criar sprites no save de um model
 - otimizacao da saida com configuracao do tipo de saida
 - criacao de sprites a partir de um CSS
