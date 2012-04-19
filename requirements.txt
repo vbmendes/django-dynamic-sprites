@@ -3,3 +3,4 @@ PIL==1.1.7
 coverage==3.5.1
 cssutils==0.9.9
 glue==0.1.9
+unidecode==0.04.9
