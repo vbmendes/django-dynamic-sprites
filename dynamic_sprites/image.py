@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import StringIO
 from PIL import Image as PImage
+import subprocess
 
 from dynamic_sprites.utils import cached_property
+
+
+PNGQUANT = 'pngquant'
 
 
 class Image(object):
@@ -55,5 +60,14 @@ class OutputImage(object):
     def add(self, image, x, y):
         self.canvas.paste(image.raw, (x, y))
 
-    def save(self, path):
-        self.canvas.save(path, optimize=True)
+    def save(self, path, pngquant=False):
+        image_buffer = StringIO.StringIO()
+        self.canvas.save(image_buffer, format='PNG', optimize=True)
+        if pngquant:
+            subp = subprocess.Popen([PNGQUANT, '-'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            image_str = subp.communicate(input=image_buffer.getvalue())[0]
+            subp.wait()
+        else:
+            image_str = image_buffer.getvalue()
+        with open(path, 'w') as output_file:
+            output_file.write(image_str)

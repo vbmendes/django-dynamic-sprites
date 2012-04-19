@@ -4,6 +4,7 @@ import os
 
 from django.conf import settings
 
+from dynamic_sprites import conf
 from dynamic_sprites.model_sprite import ModelSprite
 
 
@@ -28,7 +29,7 @@ class ModelSpriteListener(object):
             slug_field=self.slug_field
         )
         image = sprite.generate()
-        image.save(self.image_absolute_path)
+        image.save(self.image_absolute_path, pngquant=conf.USE_PNGQUANT)
         css = sprite.generate_css(self.image_filename)
         css.save(self.css_absolute_path)
 

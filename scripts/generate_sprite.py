@@ -25,6 +25,7 @@ def main():
     parser = OptionParser(usage=("usage: %prog [options] source_dir output_path"))
     parser.add_option("-p", "--packing", dest="packing",  default='horizontal',
                       help="packing algorithm to generate sprites. Options are horizontal, vertical or bin")
+    parser.add_option("-q", action="store_true", dest="pngquant")
 
     (options, args) = parser.parse_args()
     packing = PACKING_DICT[options.packing.strip()]
@@ -40,7 +41,7 @@ def main():
 
     output_image = sprite.generate()
     output_css = sprite.generate_css(output_png_path)
-    output_image.save(output_png_path)
+    output_image.save(output_png_path, pngquant=options.pngquant)
     output_css.save(output_css_path)
 
 if __name__ == '__main__':
