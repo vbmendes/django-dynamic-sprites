@@ -4,12 +4,13 @@
 from optparse import OptionParser
 import os
 
-from dynamic_sprites.sprite import Sprite
 from dynamic_sprites.packing import PACKING_DICT
+from dynamic_sprites.slugify import slugify
+from dynamic_sprites.sprite import Sprite
 
 
 def get_image_slug(image_path):
-    return '.'.join(image_path.split('/')[-1].split('.')[:-1]).replace('-', '_')
+    return slugify('.'.join(image_path.split('/')[-1].split('.')[:-1]))
 
 
 def get_images(input_dir):
