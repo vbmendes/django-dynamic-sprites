@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from dynamic_sprites.packing import HorizontalPacking, EmptyPacking
 from dynamic_sprites.image import Image, OutputImage
 from dynamic_sprites.output_css import OutputCss
+from dynamic_sprites.packing import HorizontalPacking, EmptyPacking
 
 
 class Sprite(object):

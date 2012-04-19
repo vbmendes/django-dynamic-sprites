@@ -49,7 +49,7 @@ class ScriptTestCase(unittest.TestCase):
     def test_command_generates_the_output_style(self):
         subprocess.call([self.script_path, self.input_path, self.output_path])
         self.assertOutputCss(
-            ('.sprite-output-sprite-bra', '0 0'),
+            ('.sprite-output-sprite-bandeira-do-brasil', '0 0'),
             ('.sprite-output-sprite-can', '-48px 0'),
             ('.sprite-output-sprite-usa', '-96px 0'),
         )
@@ -57,7 +57,7 @@ class ScriptTestCase(unittest.TestCase):
     def test_command_accepts_the_vertical_packing_parameter(self):
         subprocess.call([self.script_path, '-p vertical', self.input_path, self.output_path])
         self.assertOutputCss(
-            ('.sprite-output-sprite-bra', '0 0'),
+            ('.sprite-output-sprite-bandeira-do-brasil', '0 0'),
             ('.sprite-output-sprite-can', '0 -48px'),
             ('.sprite-output-sprite-usa', '0 -96px'),
         )
@@ -65,7 +65,7 @@ class ScriptTestCase(unittest.TestCase):
     def test_command_accepts_the_bin_packing_parameter(self):
         subprocess.call([self.script_path, '--packing=bin', self.input_path, self.output_path])
         self.assertOutputCss(
-            ('.sprite-output-sprite-bra', '0 0'),
+            ('.sprite-output-sprite-bandeira-do-brasil', '0 0'),
             ('.sprite-output-sprite-can', '-48px 0'),
             ('.sprite-output-sprite-usa', '0 -48px'),
         )
