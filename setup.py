@@ -11,6 +11,10 @@ setup(
     download_url='https://github.com/vbmendes/django-dynamic-sprites/downloads',
     license='BSD',
     packages=find_packages(exclude=('ez_setup', 'tests', 'example')),
+    install_requires=[
+        'PIL>=1.1.7',
+        'unidecode==0.04.9',
+    ],
     tests_require=[
         'django>=1.1,<1.4',
     ],
