@@ -21,6 +21,7 @@ class ScriptTestCase(unittest.TestCase):
         self.output_css = '%s.css' % self.output_path
 
         self.old_python_path = sys.path.append(self.ROOT_DIR)
+        os.environ['PYTHONPATH'] = self.ROOT_DIR + ':' + os.environ.get('PYTHONPATH', '')
 
     def tearDown(self):
         os.remove(self.output_png)
