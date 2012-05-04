@@ -37,7 +37,7 @@ class Sprite(object):
         return output
 
     def generate_css(self, image_url):
-        output_parts = [".sprite-%(sprite_name)s{background:url(%(image_url)s)}" % {
+        output_parts = [".sprite-%(sprite_name)s{background-image:url(%(image_url)s)}" % {
             'sprite_name': self.name,
             'image_url': image_url,
         }]
