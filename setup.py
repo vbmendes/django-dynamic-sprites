@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-dynamic-sprites',
-    version='0.0.1',
+    version='0.1.0',
     description='A way to generate sprites based on objects created by the application user.',
     long_description=open('README.rst').read(),
     author='Vinicius Mendes',
@@ -17,6 +17,9 @@ setup(
     ],
     tests_require=[
         'django>=1.1,<1.4',
+    ],
+    scripts=[
+        'scripts/generate_sprite.py'
     ],
     test_suite='runtests.runtests',
     include_package_data=True,
