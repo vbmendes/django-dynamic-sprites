@@ -3,7 +3,7 @@ Django Dynamic Sprites
 
 Create sprites dynamicaly for Python and Django.
 
-Version 0.0.1
+Version 0.1.0
 
 Instalation
 -----------
