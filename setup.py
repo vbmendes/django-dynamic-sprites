@@ -12,7 +12,7 @@ setup(
     license='BSD',
     packages=find_packages(exclude=('ez_setup', 'tests', 'example')),
     install_requires=[
-        'PIL>=1.1.7',
+        'Pillow>=1.1.7',
         'unidecode>=0.04.9',
     ],
     tests_require=[
