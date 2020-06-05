@@ -16,7 +16,7 @@ setup(
         'unidecode>=0.04.9',
     ],
     tests_require=[
-        'django>=1.1,<1.4',
+        'django>=1.1,<1.12',
     ],
     scripts=[
         'scripts/generate_sprite.py'
